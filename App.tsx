@@ -14,9 +14,9 @@ interface EventItemWithEligibility extends EventItem {
 
 const FALLBACK_ASSETS = {
   background: "https://images.unsplash.com/photo-1635944095210-23114a1fb7c0?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aWNlYmVyZ3xlbnwwfHwwfHx8MA%3D%3D",
-  freshers: "https://thumbs.dreamstime.com/b/professional-programmer-working-writing-code-laptop-computer-desk-programmer-developer-workplace-flat-d-isometric-technol-83463563.jpg",
-  pro: "https://thumbs.dreamstime.com/b/professional-programmer-working-82129867.jpg",
-  workshop: "https://a0.anyrgb.com/pngimg/1556/422/computer-programmers-colocation-ibm-software-engineering-programmer-software-developer-software-development-collaboration-classroom-location.png"
+  freshers: "/Fresher.jpeg",
+  pro: "/Pro.jpeg",
+  workshop: "/Level.jpeg"
 };
 
 
@@ -273,20 +273,7 @@ const App: React.FC = () => {
       };
 
       const bgImg = await fetchAsset("A hyper-realistic cinematic cross-section of a massive majestic iceberg floating in a dark deep ocean. Glowing blue base, cinematic lighting, 8k resolution.");
-      if (bgImg) setBackgroundUrl(bgImg);
-
-      const eventPrompts = [
-        { id: '1', prompt: "Futuristic neon hacking computer workstation, first year students theme, cyan light." },
-        { id: '2', prompt: "Advanced cyber security command center monitors, professional edition, glowing matrix." },
-        { id: '3', prompt: "Sle holographic project presentation board, technical workshop, 3D data viz." }
-      ];
-
-      for (const item of eventPrompts) {
-        const img = await fetchAsset(item.prompt);
-        if (img) {
-          setEvents(prev => prev.map(ev => ev.id === item.id ? { ...ev, imageUrl: img } : ev));
-        }
-      }
+      if (bgImg) setBackgroundUrl(bgImg);  
     };
 
     generateAssets();
@@ -590,6 +577,7 @@ const App: React.FC = () => {
             </div>
             
             <div className="hidden md:flex gap-12 items-center text-sm font-stylish font-bold tracking-widest uppercase ml-auto mr-4 md:mr-6">
+              <button onClick={() => setView('home')} className={`hover:text-sky-400 transition-colors ${view === 'home' ? 'text-sky-400' : 'text-slate-300'}`}>Home</button>
               <button onClick={() => setView('about')} className={`hover:text-sky-400 transition-colors ${view === 'about' ? 'text-sky-400' : 'text-slate-300'}`}>About</button>
               <button onClick={() => setView('events')} className={`hover:text-sky-400 transition-colors ${view === 'events' ? 'text-sky-400' : 'text-slate-300'}`}>Events</button>
               <button onClick={() => setView('team')} className={`hover:text-sky-400 transition-colors ${view === 'team' ? 'text-sky-400' : 'text-slate-300'}`}>Team</button>
@@ -613,7 +601,6 @@ const App: React.FC = () => {
                 </div>
                 <div>
                   <span className="text-lg font-stylish font-bold tracking-tight text-white block">ICEBERG COSMOS 2025</span>
-                  <span className="text-xs text-slate-500 font-mono-tech uppercase tracking-widest">RCCIT Chapter</span>
                 </div>
               </div>
               
