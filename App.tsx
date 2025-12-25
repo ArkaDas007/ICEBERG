@@ -126,7 +126,7 @@ const Snowfall: React.FC = () => {
  */
 const LogoImage: React.FC<{ className?: string; src?: string }> = ({ 
   className = "w-full h-full object-contain p-1",
-  src = "IEI.jpeg"
+  src = "/IEI.jpeg"
 }) => {
   return (
     <img 
@@ -157,15 +157,15 @@ const TriangularLogos: React.FC<{ className?: string }> = ({ className = "" }) =
     </svg>
     {/* TOP: IEI.jpeg */}
     <div className="absolute top-0 left-1/2 -translate-x-1/2">
-      <LogoSlot size="w-9 h-9 md:w-12 md:h-12" src="IEI.jpeg" />
+      <LogoSlot size="w-9 h-9 md:w-12 md:h-12" src="/IEI.jpeg" />
     </div>
     {/* BOTTOM LEFT: IIC.jpeg */}
     <div className="absolute bottom-0 left-0">
-      <LogoSlot size="w-9 h-9 md:w-12 md:h-12" src="IIC.jpeg" />
+      <LogoSlot size="w-9 h-9 md:w-12 md:h-12" src="/IIC.jpeg" />
     </div>
     {/* BOTTOM RIGHT: CHS.jpeg */}
     <div className="absolute bottom-0 right-0">
-      <LogoSlot size="w-9 h-9 md:w-12 md:h-12" src="CHS.jpeg" />
+      <LogoSlot size="w-9 h-9 md:w-12 md:h-12" src="/CHS.jpeg" />
     </div>
   </div>
 );
@@ -186,7 +186,7 @@ const SplashScreen: React.FC<{ onFinish: () => void }> = ({ onFinish }) => {
       </div>
 
       <div className="absolute left-6 top-6 md:left-10 md:top-10 animate-in fade-in slide-in-from-top-4 duration-1000 delay-500 fill-mode-both">
-        <LogoSlot size="w-12 h-12 md:w-16 md:h-16" src="IEI.jpeg" />
+        <LogoSlot size="w-12 h-12 md:w-16 md:h-16" src="/IEI.jpeg" />
       </div>
       
       <div className="absolute right-6 top-6 md:right-10 md:top-10 flex items-center gap-4 animate-in fade-in slide-in-from-top-4 duration-1000 delay-700 fill-mode-both">
@@ -609,7 +609,7 @@ const App: React.FC = () => {
             <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
               <div className="flex items-center gap-4 justify-center md:justify-start">
                 <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center overflow-hidden border border-sky-500/30">
-                  <LogoImage src="ICEBERG.jpeg" />
+                  <LogoImage src="/ICEBERG.jpeg" />
                 </div>
                 <div>
                   <span className="text-lg font-stylish font-bold tracking-tight text-white block">ICEBERG COSMOS 2025</span>
