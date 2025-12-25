@@ -125,7 +125,7 @@ const Snowfall: React.FC = () => {
  * It uses the provided filename directly as the src, as they are confirmed to be in the root directory.
  */
 const LogoImage: React.FC<{ className?: string; src?: string }> = ({ 
-  className = "w-full h-full object-contain p-1",
+  className = "w-full h-full object-contain p-0",
   src = "/IEI.jpeg"
 }) => {
   return (
@@ -182,16 +182,16 @@ const SplashScreen: React.FC<{ onFinish: () => void }> = ({ onFinish }) => {
       
       {/* Logos configuration: Top, Bottom-Left, Bottom-Right triangular layout logic requested */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
-         <TriangularLogos className="scale-[2.5]" />
       </div>
 
-      <div className="absolute left-6 top-6 md:left-10 md:top-10 animate-in fade-in slide-in-from-top-4 duration-1000 delay-500 fill-mode-both">
+      <div className="absolute left-6 top-6 md:left-10 md:top-10 flex items-center gap-4 animate-in fade-in slide-in-from-top-4 duration-1000 delay-500 fill-mode-both">
+        <LogoSlot size="w-12 h-12 md:w-16 md:h-16" src="/RCC.png" /> 
         <LogoSlot size="w-12 h-12 md:w-16 md:h-16" src="/IEI.jpeg" />
       </div>
       
       <div className="absolute right-6 top-6 md:right-10 md:top-10 flex items-center gap-4 animate-in fade-in slide-in-from-top-4 duration-1000 delay-700 fill-mode-both">
-        <LogoSlot size="w-12 h-12 md:w-16 md:h-16" src="IIC.jpeg" />
-        <LogoSlot size="w-12 h-12 md:w-16 md:h-16" src="CHS.jpeg" />
+        <LogoSlot size="w-12 h-12 md:w-16 md:h-16" src="/IIC.jpeg" />
+        <LogoSlot size="w-12 h-12 md:w-16 md:h-16" src="/CHS.jpeg" />
       </div>
 
       <div className="relative z-10 text-center px-6 max-w-7xl">
@@ -597,10 +597,11 @@ const App: React.FC = () => {
             <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
               <div className="flex items-center gap-4 justify-center md:justify-start">
                 <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center overflow-hidden border border-sky-500/30">
-                  <LogoImage src="/ICEBERG.jpeg" />
+                  <LogoImage src="/ICEBERG.jpeg" 
+                  className="w-full h-full object-cover p-0"/>
                 </div>
                 <div>
-                  <span className="text-lg font-stylish font-bold tracking-tight text-white block">ICEBERG COSMOS 2025</span>
+                  <span className="text-lg font-stylish font-bold tracking-tight text-white block">ICEBERG COSMOS 2025-26</span>
                 </div>
               </div>
               
@@ -611,8 +612,19 @@ const App: React.FC = () => {
               </div>
 
               <div className="flex gap-10 justify-center md:justify-end text-slate-400 uppercase text-xs font-bold tracking-widest">
-                <a href="#" className="hover:text-sky-400 transition-all">Instagram</a>
-                <a href="#" className="hover:text-sky-400 transition-all">LinkedIn</a>
+                <a href="https://www.instagram.com/ieisc_rcciit?igsh=ZjZydjNxMnJ1cm5h" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-sky-400 transition-all"
+                >
+                  Instagram
+                </a>
+                <a href="https://www.linkedin.com/company/ie-i-student-chapter-rcciit/" target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-sky-400 transition-all"
+                >
+                  LinkedIn
+                </a>
               </div>
             </div>
           </footer>
