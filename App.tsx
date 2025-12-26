@@ -609,14 +609,17 @@ const App: React.FC = () => {
 
         <div className="relative z-10">
           <nav className="fixed top-0 w-full z-50 px-6 py-5 flex justify-between items-center backdrop-blur-xl border-b border-white/10 bg-slate-950/80">
+            {/* Left: Logo Area */}
             <div className="flex items-center gap-3 cursor-pointer z-[70]" onClick={() => { setView('home'); setIsMenuOpen(false); }}>
               <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center overflow-hidden border border-sky-500/20 shadow-lg">
                 <LogoImage src="ICEBERG.jpeg" />
               </div>
               <span className="text-lg font-stylish font-bold text-white uppercase tracking-tighter">
-                ICEBERG <span className="text-sky-400">COSMOS 2025-26</span>
+                ICEBERG <span className="text-sky-400">COSMOS</span>
               </span>
             </div>
+
+            {/* Desktop Menu */}
             <div className="hidden md:flex gap-10 items-center text-sm font-stylish font-bold tracking-widest uppercase ml-auto">
               {['home', 'about', 'events', 'team', 'mission'].map((item) => (
                 <button
@@ -629,6 +632,7 @@ const App: React.FC = () => {
               ))}
             </div>
 
+            {/* Mobile Hamburger Button */}
             <button
               className="md:hidden z-[70] flex flex-col gap-1.5 justify-center items-center w-11 h-11 border border-white/20 rounded-xl bg-slate-900 shadow-2xl"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -638,35 +642,37 @@ const App: React.FC = () => {
               <div className={`h-0.5 w-5 bg-sky-400 transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
             </button>
 
+            {/* THE "BIGGER" SIDE DRAWER */}
             <div className={`fixed inset-0 z-[60] md:hidden transition-all duration-500 ${isMenuOpen ? 'visible' : 'invisible'}`}>
-              
-              <div
-                className={`absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity duration-500 ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`}
-                onClick={() => setIsMenuOpen(false)}
-              />
+              {/* Semi-transparent backdrop to focus on the drawer */}
+              <div className={`absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`} onClick={() => setIsMenuOpen(false)} />
 
-              <div className={`absolute right-0 top-0 h-full w-[70%] max-w-[260px] bg-slate-950 border-l border-sky-500/20 shadow-[-10px_0_40px_rgba(0,0,0,0.9)] transition-transform duration-500 flex flex-col justify-center ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+              {/* The Larger Black Box (85% width) */}
+              <div className={`absolute right-0 top-0 h-full w-[85%] max-w-[320px] bg-black border-l border-sky-500/30 shadow-[-20px_0_60px_rgba(0,0,0,1)] transition-transform duration-500 flex flex-col ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
 
-                <div className="absolute top-10 right-0 w-32 h-32 bg-sky-500/5 blur-[60px] pointer-events-none" />
+                {/* Decorative Branding Header inside Box */}
+                <div className="p-8 pt-12 border-b border-white/5">
+                  <p className="text-sky-400 font-mono-tech text-[10px] tracking-[0.4em] uppercase mb-1">ICEBERG COSMOS</p>
+                  <p className="text-white font-stylish font-black text-xl uppercase italic">NAVIGATION</p>
+                </div>
 
-                <div className="flex flex-col px-8 gap-4">
-                  <p className="text-[10px] font-mono-tech text-sky-500/50 uppercase tracking-[0.3em] mb-4">Navigation</p>
-
+                {/* Button List - Smaller text (base) and tight gap (4) to prevent scrolling */}
+                <div className="flex flex-col p-8 gap-4 flex-1 justify-start">
                   {['home', 'about', 'events', 'team', 'mission'].map((item) => (
                     <button
                       key={item}
                       onClick={() => { setView(item as ViewType); setIsMenuOpen(false); }}
-                      className={`text-lg font-stylish font-bold uppercase tracking-[0.1em] text-left py-1 transition-all duration-300 ${view === item ? 'text-sky-400 border-l-2 border-sky-400 pl-4' : 'text-slate-400 pl-0'}`}
+                      className={`text-base font-stylish font-bold uppercase tracking-[0.2em] text-left py-3 transition-all duration-300 ${view === item ? 'text-sky-400 border-l-4 border-sky-400 pl-4' : 'text-slate-400 pl-0 hover:text-white'}`}
                     >
                       {item}
                     </button>
                   ))}
                 </div>
 
-                <div className="absolute bottom-8 left-8 right-8 pt-6 border-t border-white/5">
-                  <p className="text-[10px] text-slate-500 font-mono-tech uppercase tracking-widest leading-tight">
-                    ICEBERG <br /> COSMOS 25-26
-                  </p>
+                {/* Compact Footer at the bottom of the box */}
+                <div className="p-8 bg-slate-950/50 border-t border-white/5">
+                  <p className="text-[10px] text-slate-500 font-mono-tech tracking-widest uppercase mb-1">Organized by</p>
+                  <p className="text-xs text-white/80 font-bold uppercase tracking-widest leading-none">IE(I) Students' Chapter</p>
                 </div>
               </div>
             </div>
