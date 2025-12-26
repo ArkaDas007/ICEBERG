@@ -628,6 +628,20 @@ const App: React.FC = () => {
               <button onClick={() => setView('team')} className={`hover:text-sky-400 transition-colors ${view === 'team' ? 'text-sky-400' : 'text-slate-300'}`}>Team</button>
               <button onClick={() => setView('mission')} className={`hover:text-sky-400 transition-colors ${view === 'mission' ? 'text-sky-400' : 'text-slate-300'}`}>Mission</button>
             </div>
+
+            <div className="md:hidden">
+            <select 
+              value={view} 
+              onChange={(e) => setView(e.target.value as ViewType)}
+              className="bg-slate-900 text-sky-400 text-xs font-bold border border-sky-500/30 rounded-lg px-3 py-2 outline-none appearance-none uppercase tracking-widest"
+            >
+              <option value="home">Menu: Home</option>
+              <option value="about">Menu: About</option>
+              <option value="events">Menu: Events</option>
+              <option value="team">Menu: Team</option>
+              <option value="mission">Menu: Mission</option>
+            </select>
+            </div>
           </nav>
 
           <main className="container mx-auto px-6 pt-32 pb-24">
