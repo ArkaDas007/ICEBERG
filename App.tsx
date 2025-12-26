@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { GoogleGenAI } from "@google/genai";
 import EventCard from './components/EventCard';
-import AIChatBot from './components/AIChatBot';
 import { EventItem } from './types';
 
 type ViewType = 'home' | 'about' | 'events' | 'team' | 'mission';
@@ -261,29 +259,6 @@ const App: React.FC = () => {
   }, [activeTeamTab]);
   
   useEffect(() => {
-    const generateAssets = async () => {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
-      const fetchAsset = async (prompt: string, config: any = { imageConfig: { aspectRatio: "16:9" } }) => {
-        try {
-          const response = await ai.models.generateContent({
-            model: 'gemini-3-flash-preview',
-            contents: { parts: [{ text: prompt }] },
-            config
-          });
-          const part = response.candidates?.[0]?.content?.parts.find(p => p.inlineData);
-          return part?.inlineData ? `data:image/png;base64,${part.inlineData.data}` : null;
-        } catch (e: any) {
-          console.warn(`Asset generation failed: ${e?.message}`);
-          return null;
-        }
-      };
-
-      const bgImg = await fetchAsset("A hyper-realistic cinematic cross-section of a massive majestic iceberg floating in a dark deep ocean. Glowing blue base, cinematic lighting, 8k resolution.");
-      if (bgImg) setBackgroundUrl(bgImg);  
-    };
-
-    generateAssets();
   }, []);
 
   const closeDetail = () => setSelectedEvent(null);
@@ -607,6 +582,15 @@ const App: React.FC = () => {
            <TriangularLogos className="opacity-100" />
         </div>
 
+        <div className="absolute top-28 left-6 md:top-32 md:left-10 z-[30] pointer-events-none hidden lg:block">
+          <div className="flex flex-col items-center gap-3">
+            <div className="w-20 h-20 md:w-24 md:h-24 bg-white rounded-2xl flex items-center justify-center overflow-hidden border-2 border-sky-500/20 shadow-[0_0_30px_rgba(56,189,248,0.2)]">
+              <LogoImage src="/RCC.png" className="w-full h-full object-contain p-2" />
+            </div>
+            <span className="text-[9px] font-mono-tech text-sky-400/40 uppercase tracking-[0.4em]">Host Institute</span>
+          </div>
+        </div>
+
         <div className="relative z-10">
           <nav className="fixed top-0 w-full z-50 px-6 py-5 flex justify-between items-center backdrop-blur-xl border-b border-white/10 bg-slate-950/80">
             {/* Left: Logo Area */}
@@ -619,7 +603,6 @@ const App: React.FC = () => {
               </span>
             </div>
 
-            {/* Desktop Menu - Forced Uppercase */}
             <div className="hidden md:flex gap-10 items-center text-sm font-stylish font-bold tracking-widest ml-auto">
               {['home', 'about', 'events', 'team', 'mission'].map((item) => (
                 <button
@@ -632,7 +615,6 @@ const App: React.FC = () => {
               ))}
             </div>
 
-            {/* Mobile Hamburger Button */}
             <button
               className="md:hidden z-[70] flex flex-col gap-1.5 justify-center items-center w-11 h-11 border border-white/20 rounded-xl bg-slate-900 shadow-2xl"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -642,12 +624,9 @@ const App: React.FC = () => {
               <div className={`h-0.5 w-5 bg-sky-400 transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
             </button>
 
-            {/* THE DRAWER CONTAINER */}
             <div className={`fixed inset-0 z-[60] md:hidden transition-all duration-500 ${isMenuOpen ? 'visible' : 'invisible'}`}>
-              {/* Dark Overlay for the rest of the site */}
               <div className={`absolute inset-0 bg-black/80 transition-opacity ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`} onClick={() => setIsMenuOpen(false)} />
 
-              {/* THE SOLID BLACK BOX (Hardcoded style to prevent transparency) */}
               <div
                 className={`absolute right-0 top-0 h-full w-[85%] max-w-[320px] border-l border-sky-500/40 shadow-[-20px_0_80px_rgba(0,0,0,1)] transition-transform duration-500 flex flex-col`}
                 style={{
@@ -656,14 +635,11 @@ const App: React.FC = () => {
                   transform: isMenuOpen ? 'translateX(0)' : 'translateX(100%)'
                 }}
               >
-
-                {/* Header inside Drawer */}
                 <div className="p-8 pt-14 border-b border-white/10" style={{ backgroundColor: '#000000' }}>
                   <p className="text-sky-400 font-mono-tech text-[10px] tracking-[0.5em] uppercase mb-1">ICEBERG COSMOS</p>
                   <p className="text-white font-stylish font-black text-xl uppercase italic tracking-tight">NAVIGATION</p>
                 </div>
 
-                {/* Buttons: Clean white and sky-blue on solid black */}
                 <div className="flex flex-col p-8 gap-5 flex-1 justify-start" style={{ backgroundColor: '#000000' }}>
                   {['home', 'about', 'events', 'team', 'mission'].map((item) => (
                     <button
@@ -676,7 +652,6 @@ const App: React.FC = () => {
                   ))}
                 </div>
 
-                {/* Solid Footer */}
                 <div className="p-8 border-t border-white/10" style={{ backgroundColor: '#000000' }}>
                   <p className="text-[10px] text-slate-500 font-mono-tech tracking-widest uppercase mb-1">Organized by</p>
                   <p className="text-xs text-white font-bold uppercase tracking-widest">IE(I) Students' Chapter</p>
@@ -730,7 +705,6 @@ const App: React.FC = () => {
           </footer>
         </div>
 
-        <AIChatBot />
 
         {selectedEvent && (
           <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 md:p-10 animate-in fade-in zoom-in-95 duration-300">
