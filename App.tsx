@@ -609,8 +609,7 @@ const App: React.FC = () => {
 
         <div className="relative z-10">
           <nav className="fixed top-0 w-full z-50 px-6 py-5 flex justify-between items-center backdrop-blur-xl border-b border-white/10 bg-slate-950/80">
-
-            <div className="flex items-center gap-3 cursor-pointer z-[60]" onClick={() => { setView('home'); setIsMenuOpen(false); }}>
+            <div className="flex items-center gap-3 cursor-pointer z-[70]" onClick={() => { setView('home'); setIsMenuOpen(false); }}>
               <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center overflow-hidden border border-sky-500/20 shadow-lg">
                 <LogoImage src="ICEBERG.jpeg" />
               </div>
@@ -632,34 +631,42 @@ const App: React.FC = () => {
             </div>
 
             <button
-              className="md:hidden z-[60] flex flex-col gap-1.5 justify-center items-center w-10 h-10 border border-white/20 rounded-xl bg-slate-900 shadow-xl"
+              className="md:hidden z-[70] flex flex-col gap-1.5 justify-center items-center w-12 h-12 border border-white/20 rounded-xl bg-slate-900 shadow-2xl"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              <div className={`h-0.5 w-5 bg-sky-400 transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-              <div className={`h-0.5 w-5 bg-sky-400 transition-all duration-300 ${isMenuOpen ? 'opacity-0' : ''}`} />
-              <div className={`h-0.5 w-5 bg-sky-400 transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+              <div className={`h-0.5 w-6 bg-sky-400 transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+              <div className={`h-0.5 w-6 bg-sky-400 transition-all duration-300 ${isMenuOpen ? 'opacity-0' : ''}`} />
+              <div className={`h-0.5 w-6 bg-sky-400 transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
             </button>
 
-            <div className={`fixed inset-0 z-[55] transition-all duration-500 md:hidden ${isMenuOpen ? 'visible' : 'invisible'}`}>
-              <div className={`absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-500 ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`} onClick={() => setIsMenuOpen(false)} />
+            <div className={`fixed inset-0 z-[60] md:hidden transition-all duration-500 ${isMenuOpen ? 'visible' : 'invisible'}`}>
+              <div
+                className={`absolute inset-0 bg-black/80 backdrop-blur-md transition-opacity duration-500 ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`}
+                onClick={() => setIsMenuOpen(false)}
+              />
 
-              <div className={`absolute right-0 top-0 h-full w-[70%] bg-slate-950 border-l border-white/10 p-10 flex flex-col pt-32 gap-8 transition-transform duration-500 shadow-[-20px_0_50px_rgba(0,0,0,0.8)] ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+              <div className={`absolute right-0 top-0 h-full w-[80%] max-w-[300px] bg-slate-950 border-l border-sky-500/20 shadow-[-10px_0_40px_rgba(0,0,0,0.9)] transition-transform duration-500 flex flex-col ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
 
-                <div className="absolute top-0 right-0 w-full h-32 bg-sky-500/10 blur-[80px] pointer-events-none" />
+                <div className="h-32 w-full border-b border-white/5 bg-white/5 flex items-end p-8">
+                  <span className="text-sky-400 font-mono-tech text-xs tracking-[0.3em] uppercase">Navigation</span>
+                </div>
 
-                {['home', 'about', 'events', 'team', 'mission'].map((item) => (
-                  <button
-                    key={item}
-                    onClick={() => { setView(item as ViewType); setIsMenuOpen(false); }}
-                    className={`text-2xl font-stylish font-bold uppercase tracking-[0.2em] text-left transition-all duration-300 ${view === item ? 'text-sky-400 pl-4 border-l-2 border-sky-400' : 'text-slate-400 hover:text-white'}`}
-                  >
-                    {item}
-                  </button>
-                ))}
+                <div className="flex flex-col p-8 gap-6 overflow-y-auto">
+                  {['home', 'about', 'events', 'team', 'mission'].map((item) => (
+                    <button
+                      key={item}
+                      onClick={() => { setView(item as ViewType); setIsMenuOpen(false); }}
+                      className={`text-xl font-stylish font-bold uppercase tracking-[0.15em] text-left py-2 transition-all duration-300 ${view === item ? 'text-sky-400 border-l-4 border-sky-400 pl-4' : 'text-slate-400 pl-0 hover:text-white'}`}
+                    >
+                      {item}
+                    </button>
+                  ))}
+                </div>
 
-                <div className="mt-auto pb-10 border-t border-white/5 pt-8">
-                  <p className="text-[10px] font-mono-tech text-slate-500 uppercase tracking-widest">Organized by</p>
-                  <p className="text-xs text-slate-300 font-bold mt-1 uppercase">IE(I) Students' Chapter</p>
+                <div className="mt-auto p-8 bg-slate-900/50 border-t border-white/5">
+                  <p className="text-[10px] font-mono-tech text-slate-500 uppercase tracking-widest mb-2">Flagship Initiative</p>
+                  <p className="text-xs text-white font-bold uppercase tracking-tighter">IE(I) Students' Chapter</p>
+                  <p className="text-[9px] text-sky-400 font-mono-tech mt-1 tracking-widest uppercase">Dept of IT, RCCIIT</p>
                 </div>
               </div>
             </div>
