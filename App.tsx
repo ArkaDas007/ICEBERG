@@ -619,13 +619,13 @@ const App: React.FC = () => {
               </span>
             </div>
 
-            {/* Desktop Menu */}
-            <div className="hidden md:flex gap-10 items-center text-sm font-stylish font-bold tracking-widest uppercase ml-auto">
+            {/* Desktop Menu - Forced Uppercase */}
+            <div className="hidden md:flex gap-10 items-center text-sm font-stylish font-bold tracking-widest ml-auto">
               {['home', 'about', 'events', 'team', 'mission'].map((item) => (
                 <button
                   key={item}
                   onClick={() => setView(item as ViewType)}
-                  className={`hover:text-sky-400 transition-colors ${view === item ? 'text-sky-400' : 'text-slate-300'}`}
+                  className={`uppercase hover:text-sky-400 transition-colors ${view === item ? 'text-sky-400' : 'text-slate-300'}`}
                 >
                   {item}
                 </button>
@@ -642,27 +642,34 @@ const App: React.FC = () => {
               <div className={`h-0.5 w-5 bg-sky-400 transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
             </button>
 
-            {/* THE SOLID BLACK SIDE DRAWER */}
+            {/* THE DRAWER CONTAINER */}
             <div className={`fixed inset-0 z-[60] md:hidden transition-all duration-500 ${isMenuOpen ? 'visible' : 'invisible'}`}>
-              {/* Background Dimmer (keeps the rest of the site dark) */}
-              <div className={`absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`} onClick={() => setIsMenuOpen(false)} />
+              {/* Dark Overlay for the rest of the site */}
+              <div className={`absolute inset-0 bg-black/80 transition-opacity ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`} onClick={() => setIsMenuOpen(false)} />
 
-              {/* The Solid Black Box (No transparency) */}
-              <div className={`absolute right-0 top-0 h-full w-[85%] max-w-[320px] bg-[#000000] border-l border-sky-500/40 shadow-[-20px_0_80px_rgba(0,0,0,1)] transition-transform duration-500 flex flex-col ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+              {/* THE SOLID BLACK BOX (Hardcoded style to prevent transparency) */}
+              <div
+                className={`absolute right-0 top-0 h-full w-[85%] max-w-[320px] border-l border-sky-500/40 shadow-[-20px_0_80px_rgba(0,0,0,1)] transition-transform duration-500 flex flex-col`}
+                style={{
+                  backgroundColor: '#000000',
+                  opacity: 1,
+                  transform: isMenuOpen ? 'translateX(0)' : 'translateX(100%)'
+                }}
+              >
 
-                {/* Top Header Section */}
-                <div className="p-8 pt-14 border-b border-white/10 bg-slate-950">
+                {/* Header inside Drawer */}
+                <div className="p-8 pt-14 border-b border-white/10" style={{ backgroundColor: '#000000' }}>
                   <p className="text-sky-400 font-mono-tech text-[10px] tracking-[0.5em] uppercase mb-1">ICEBERG COSMOS</p>
                   <p className="text-white font-stylish font-black text-xl uppercase italic tracking-tight">NAVIGATION</p>
                 </div>
 
                 {/* Buttons: Clean white and sky-blue on solid black */}
-                <div className="flex flex-col p-8 gap-5 flex-1 justify-start">
+                <div className="flex flex-col p-8 gap-5 flex-1 justify-start" style={{ backgroundColor: '#000000' }}>
                   {['home', 'about', 'events', 'team', 'mission'].map((item) => (
                     <button
                       key={item}
                       onClick={() => { setView(item as ViewType); setIsMenuOpen(false); }}
-                      className={`text-base font-stylish font-bold uppercase tracking-[0.2em] text-left py-3 transition-all duration-300 ${view === item ? 'text-sky-400 border-l-4 border-sky-400 pl-5' : 'text-slate-400 pl-0 hover:text-white'}`}
+                      className={`text-base font-stylish font-bold uppercase tracking-[0.2em] text-left py-3 transition-all duration-300 ${view === item ? 'text-sky-400 border-l-4 border-sky-400 pl-5' : 'text-slate-300 pl-0'}`}
                     >
                       {item}
                     </button>
@@ -670,10 +677,9 @@ const App: React.FC = () => {
                 </div>
 
                 {/* Solid Footer */}
-                <div className="p-8 bg-slate-950 border-t border-white/10">
+                <div className="p-8 border-t border-white/10" style={{ backgroundColor: '#000000' }}>
                   <p className="text-[10px] text-slate-500 font-mono-tech tracking-widest uppercase mb-1">Organized by</p>
                   <p className="text-xs text-white font-bold uppercase tracking-widest">IE(I) Students' Chapter</p>
-                  <p className="text-[9px] text-sky-400/70 font-mono-tech mt-1 uppercase">RCC Institute of Information Tech</p>
                 </div>
               </div>
             </div>
