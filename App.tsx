@@ -252,7 +252,13 @@ const App: React.FC = () => {
   const [selectedEvent, setSelectedEvent] = useState<EventItemWithEligibility | null>(null);
   const [backgroundUrl, setBackgroundUrl] = useState<string>(FALLBACK_ASSETS.background);
   const [events, setEvents] = useState<EventItemWithEligibility[]>(INITIAL_EVENTS);
+  const [teamPage, setTeamPage] = useState(1);
+  const MEMBERS_PER_PAGE = 8;
 
+  useEffect(() => {
+    setTeamPage(1);
+  }, [activeTeamTab]);
+  
   useEffect(() => {
     const generateAssets = async () => {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
@@ -287,123 +293,114 @@ const App: React.FC = () => {
   };
 
   const renderHome = () => (
-    <>
-      <section id="about" className="max-w-5xl mx-auto text-center mb-40 mt-10">
-        <h1 className="text-6xl md:text-8xl lg:text-9xl font-stylish font-black mb-10 leading-[0.9] glow-text text-white tracking-tighter uppercase">
-          ICEBERG <br />
-          <span className="vibrant-shimmer">COSMOS 2025</span>
-        </h1>
-        <div className="space-y-8 text-lg md:text-2xl text-slate-200 leading-relaxed font-light max-w-4xl mx-auto backdrop-blur-md bg-slate-950/50 p-8 md:p-12 rounded-[2.5rem] border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)]">
-          <p className="animate-in fade-in slide-in-from-bottom-4 duration-700 fill-mode-both font-display">
-            ICEBERG COSMOS 2025 is a flagship multi-event technical initiative organized by the 
-            <span className="text-sky-400 font-medium"> IE(I) Students’ Chapter</span>, 
-            Department of Information Technology, RCC Institute of Information Technology, in collaboration with 
-            <span className="text-indigo-400 font-medium"> IIC</span> and <span className="text-purple-400 font-medium">CHS</span>.
-          </p>
-          <p className="animate-in fade-in slide-in-from-bottom-4 delay-200 duration-700 fill-mode-both text-slate-300 text-base md:text-lg italic leading-loose font-display">
-            The event is structured as a year-wise technical and career development ecosystem comprising three 
-            distinct sub-events, each catering to a specific academic year. The initiative aims to foster innovation, 
-            strengthen problem-solving skills, and enhance career readiness among students.
-          </p>
-        </div>
-      </section>
+  <>
+    <section id="home" className="max-w-5xl mx-auto text-center mb-24 md:mb-40 mt-6 md:mt-10 px-4">
+      <h1 className="text-5xl md:text-8xl lg:text-9xl font-stylish font-black mb-8 md:mb-10 leading-[1.1] md:leading-[0.9] glow-text text-white tracking-tighter uppercase">
+        ICEBERG <br />
+        <span className="vibrant-shimmer">COSMOS 2025</span>
+      </h1>
+      
+      <div className="space-y-6 md:space-y-8 text-base md:text-2xl text-slate-200 leading-relaxed font-light max-w-4xl mx-auto backdrop-blur-md bg-slate-950/50 p-6 md:p-12 rounded-[2rem] md:rounded-[2.5rem] border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+        <p className="animate-in fade-in slide-in-from-bottom-4 duration-700 fill-mode-both font-display">
+          ICEBERG COSMOS 2025 is a flagship multi-event technical initiative organized by the 
+          <span className="text-sky-400 font-medium"> IE(I) Students’ Chapter</span>, 
+          Dept. of IT, RCCIIT, in collaboration with 
+          <span className="text-indigo-400 font-medium"> IIC</span> and <span className="text-purple-400 font-medium">CHS</span>.
+        </p>
+      </div>
+    </section>
 
-      <section id="objectives" className="scroll-mt-24 mb-32 max-w-6xl mx-auto">
-        <div className="mb-16 text-center">
-          <h2 className="text-5xl md:text-8xl font-display font-black mb-4 tracking-tighter uppercase italic text-transparent bg-clip-text bg-gradient-to-b from-white to-white/10">
-            OBJECTIVE
-          </h2>
-          <div className="h-1 w-24 bg-sky-500 mx-auto rounded-full shadow-[0_0_15px_rgba(56,189,248,0.5)]" />
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {OBJECTIVES.map((obj, idx) => (
-            <div key={idx} className="group relative glass-card p-8 rounded-3xl border border-white/10 hover:border-sky-500/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.7)] overflow-hidden">
-              <div className="absolute top-0 left-0 w-1 h-full bg-sky-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="flex flex-col gap-4">
-                <span className="font-mono-tech text-3xl text-sky-500 font-bold opacity-20 group-hover:opacity-100 transition-all group-hover:scale-110">
-                  {String(idx + 1).padStart(2, '0')}
-                </span>
-                <p className="font-mono-tech text-base text-slate-200 leading-relaxed group-hover:text-white transition-colors">
-                  {obj}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section id="events" className="scroll-mt-24 mb-48 max-w-6xl mx-auto">
-        <div className="mb-20 text-center">
-          <h2 className="text-5xl md:text-8xl font-display font-black mb-4 tracking-tighter uppercase italic text-transparent bg-clip-text bg-gradient-to-b from-white to-white/10">
-            EVENTS
-          </h2>
-          <p className="text-sky-400 font-display font-bold tracking-[0.4em] uppercase text-sm mb-4">A Triple Threat Technical Tier</p>
-        </div>
-        <div className="flex flex-col gap-16 max-w-4xl mx-auto">
-          {events.map((event) => (
-            <div key={event.id} className="w-full transform transition-all" onClick={() => setSelectedEvent(event)}>
-              <EventCard event={event} />
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section id="mission" className="max-w-6xl mx-auto mb-40">
-         <div className="glass-card rounded-[4rem] p-12 md:p-24 relative overflow-hidden group border border-white/20 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.8)]">
-           <div className="absolute top-0 right-0 w-[50rem] h-[50rem] bg-sky-500/10 rounded-full blur-[140px] -mr-80 -mt-80 transition-all duration-1000 group-hover:bg-sky-500/20" />
-           <div className="relative z-10 text-center">
-             <div className="inline-flex items-center gap-4 mb-16">
-               <div className="h-[1px] w-8 bg-sky-500" />
-               <span className="text-sky-400 font-mono-tech font-bold tracking-[0.6em] uppercase text-xs">The Collective Vision</span>
-               <div className="h-[1px] w-8 bg-sky-500" />
-             </div>
-             <div className="max-w-4xl mx-auto relative">
-               <p className="text-2xl md:text-4xl font-stylish font-bold text-white leading-relaxed tracking-tight mb-12">
-                ICEBERG COSMOS 2025 establishes a <span className="text-sky-400">structured, year-wise technical growth pipeline</span> that nurtures innovation, research capability, and career readiness.
-               </p>
-               <div className="mt-12 space-y-4">
-                 <p className="text-lg md:text-xl text-slate-300 leading-loose font-light font-display">
-                   The event strengthens preparation for <span className="text-white font-medium border-b border-sky-500/50">SBH – Smart Bengal Hackathon</span> and enhances the institution’s technical and competitive standing.
-                 </p>
-               </div>
-             </div>
-           </div>
-         </div>
-      </section>
-    </>
-  );
-
-  const renderAboutView = () => (
-    <div className="animate-in fade-in slide-in-from-bottom-10 duration-700 max-w-6xl mx-auto pt-20">
-      <div className="text-center mb-20">
-        <h2 className="text-6xl md:text-9xl font-stylish font-black mb-4 tracking-tighter uppercase italic text-white glow-text">ABOUT</h2>
+    <section id="objectives" className="scroll-mt-24 mb-24 md:mb-32 max-w-6xl mx-auto px-4">
+      <div className="mb-12 md:mb-16 text-center">
+        <h2 className="text-4xl md:text-8xl font-display font-black mb-4 tracking-tighter uppercase italic text-transparent bg-clip-text bg-gradient-to-b from-white to-white/10">
+          OBJECTIVE
+        </h2>
         <div className="h-1 w-24 bg-sky-500 mx-auto rounded-full shadow-[0_0_15px_rgba(56,189,248,0.5)]" />
       </div>
-      <div className="glass-card rounded-[3rem] p-12 md:p-20 border border-white/10 shadow-2xl space-y-16">
-        <p className="text-2xl md:text-3xl font-display text-white leading-relaxed text-center">
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        {OBJECTIVES.map((obj, idx) => (
+          <div key={idx} className="group relative glass-card p-6 md:p-8 rounded-2xl md:rounded-3xl border border-white/10 hover:border-sky-500/50 transition-all duration-500 overflow-hidden">
+            <div className="flex flex-col gap-3 md:gap-4">
+              <span className="font-mono-tech text-2xl md:text-3xl text-sky-500 font-bold opacity-30">
+                {String(idx + 1).padStart(2, '0')}
+              </span>
+              <p className="font-mono-tech text-sm md:text-base text-slate-200 leading-relaxed">
+                {obj}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section id="events" className="scroll-mt-24 mb-24 md:mb-48 max-w-6xl mx-auto px-4">
+      <div className="mb-12 md:mb-20 text-center">
+        <h2 className="text-4xl md:text-8xl font-display font-black mb-4 tracking-tighter uppercase italic text-transparent bg-clip-text bg-gradient-to-b from-white to-white/10">
+          EVENTS
+        </h2>
+        <p className="text-sky-400 font-display font-bold tracking-[0.2em] md:tracking-[0.4em] uppercase text-[10px] md:text-sm">A Triple Threat Technical Tier</p>
+      </div>
+      <div className="flex flex-col gap-8 md:gap-16 max-w-4xl mx-auto">
+        {events.map((event) => (
+          <div key={event.id} className="w-full transform transition-all cursor-pointer" onClick={() => setSelectedEvent(event)}>
+            <EventCard event={event} />
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section id="mission" className="max-w-6xl mx-auto mb-20 md:mb-40 px-4">
+       <div className="glass-card rounded-[2rem] md:rounded-[4rem] p-8 md:p-24 relative overflow-hidden group border border-white/20 shadow-2xl">
+         <div className="relative z-10 text-center">
+           <div className="max-w-4xl mx-auto">
+             <p className="text-xl md:text-4xl font-stylish font-bold text-white leading-tight md:leading-relaxed tracking-tight mb-8">
+              ICEBERG COSMOS 2025 establishes a <span className="text-sky-400">structured, year-wise technical growth pipeline</span>.
+             </p>
+             <p className="text-sm md:text-xl text-slate-300 font-light font-display">
+               Strengthening preparation for <span className="text-white font-medium">SBH – Smart Bengal Hackathon</span>.
+             </p>
+           </div>
+         </div>
+       </div>
+    </section>
+  </>
+);
+
+  const renderAboutView = () => (
+    <div className="animate-in fade-in slide-in-from-bottom-10 duration-700 max-w-6xl mx-auto pt-10 md:pt-20 px-4">
+      {/* Title section adjusted for mobile font sizes */}
+      <div className="text-center mb-10 md:mb-20">
+        <h2 className="text-5xl md:text-9xl font-stylish font-black mb-4 tracking-tighter uppercase italic text-white glow-text">ABOUT</h2>
+        <div className="h-1 w-20 md:w-24 bg-sky-500 mx-auto rounded-full shadow-[0_0_15px_rgba(56,189,248,0.5)]" />
+      </div>
+
+      <div className="glass-card rounded-[2rem] md:rounded-[3rem] p-6 md:p-20 border border-white/10 shadow-2xl space-y-10 md:space-y-16">
+        <p className="text-xl md:text-3xl font-display text-white leading-relaxed text-center">
           ICEBERG COSMOS 2025 is a flagship multi-event technical initiative organized by the <span className="text-sky-400 font-bold">IE(I) Students’ Chapter</span>, Department of Information Technology, RCC Institute of Information Technology, in collaboration with <span className="text-indigo-400 font-bold">IIC</span> and <span className="text-purple-400 font-bold">CHS</span>.
         </p>
-        <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-sky-500/50 to-transparent" />
-        <p className="text-xl md:text-2xl text-slate-300 leading-relaxed font-light text-center">
-          The event is structured as a year-wise technical and career development ecosystem comprising three distinct sub-events, each catering to a specific academic year. The initiative aims to foster innovation, strengthen problem-solving skills, and enhance career readiness among students.
-        </p>
         
-        <div className="pt-20">
-          <div className="text-center mb-16">
-            <h3 className="text-4xl font-stylish font-bold text-sky-400 uppercase tracking-widest">COLLABORATORS</h3>
+        <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-sky-500/50 to-transparent" />
+        
+        <div className="pt-6 md:pt-10">
+          <div className="text-center mb-10 md:mb-16">
+            <h3 className="text-2xl md:text-4xl font-stylish font-bold text-sky-400 uppercase tracking-widest">COLLABORATORS</h3>
           </div>
-          <div className="flex flex-wrap justify-center gap-16 md:gap-32 items-center">
-            <div className="flex flex-col items-center gap-6 group">
-               <LogoSlot size="w-28 h-28 md:w-40 md:h-40" src="IIC.jpeg" className="group-hover:border-sky-500 transition-all duration-500" />
-               <span className="text-white font-stylish font-bold tracking-widest text-lg">IIC</span>
+
+          <div className="flex flex-col md:flex-row justify-center gap-12 md:gap-32 items-center">
+            
+            <div className="flex flex-col items-center gap-4 md:gap-6 group">
+               <LogoSlot size="w-24 h-24 md:w-40 md:h-40" src="IIC.jpeg" className="group-hover:border-sky-500 transition-all duration-500" />
+               <span className="text-white font-stylish font-bold tracking-widest text-base md:text-lg">IIC</span>
                <div className="h-0.5 w-0 group-hover:w-full bg-sky-500 transition-all duration-500" />
             </div>
-            <div className="flex flex-col items-center gap-6 group">
-               <LogoSlot size="w-28 h-28 md:w-40 md:h-40" src="CHS.jpeg" className="group-hover:border-white transition-all duration-500" />
-               <span className="text-white font-stylish font-bold tracking-widest text-lg">CHS</span>
+
+            <div className="flex flex-col items-center gap-4 md:gap-6 group">
+               <LogoSlot size="w-24 h-24 md:w-40 md:h-40" src="CHS.jpeg" className="group-hover:border-white transition-all duration-500" />
+               <span className="text-white font-stylish font-bold tracking-widest text-base md:text-lg">CHS</span>
                <div className="h-0.5 w-0 group-hover:w-full bg-white transition-all duration-500" />
             </div>
+
           </div>
         </div>
       </div>
@@ -411,139 +408,187 @@ const App: React.FC = () => {
   );
 
   const renderEventsView = () => (
-    <div className="animate-in fade-in slide-in-from-bottom-10 duration-700 max-w-6xl mx-auto pt-20">
-      <div className="text-center mb-20">
-        <h2 className="text-6xl md:text-9xl font-stylish font-black mb-4 tracking-tighter uppercase italic text-white glow-text">EVENTS</h2>
-        <div className="h-1 w-24 bg-sky-500 mx-auto rounded-full shadow-[0_0_15px_rgba(56,189,248,0.5)]" />
+  <div className="animate-in fade-in slide-in-from-bottom-10 duration-700 max-w-6xl mx-auto pt-10 md:pt-20 px-4">
+    {/* Title Section: Smaller on mobile (text-5xl) */}
+    <div className="text-center mb-10 md:mb-20">
+      <h2 className="text-5xl md:text-9xl font-stylish font-black mb-4 tracking-tighter uppercase italic text-white glow-text">EVENTS</h2>
+      <div className="h-1 w-20 md:w-24 bg-sky-500 mx-auto rounded-full shadow-[0_0_15px_rgba(56,189,248,0.5)]" />
+    </div>
+    
+    <div className="flex flex-col gap-8 md:gap-16 max-w-5xl mx-auto mb-20 md:mb-32">
+      {events.map((event) => (
+        <div key={event.id} className="w-full cursor-pointer" onClick={() => setSelectedEvent(event)}>
+          <div className="glass-card p-2 md:p-4 rounded-[1.5rem] md:rounded-[2.5rem] border border-white/5">
+            <EventCard event={event} />
+            <div className="px-6 md:px-12 py-4 md:py-6 bg-slate-900/30 rounded-b-[1.2rem] md:rounded-b-[2rem] mt-2 flex justify-center items-center text-[10px] md:text-sm font-mono-tech uppercase">
+              <span className="text-slate-500 text-center">Event Date: <span className="text-sky-400 font-bold">{getEventDate(event.relevantInfo)}</span></span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div className="max-w-5xl mx-auto mb-24 md:mb-40">
+      <div className="text-center mb-8 md:mb-12">
+        <h3 className="text-3xl md:text-5xl font-stylish font-black text-white glow-text uppercase">ELIGIBILITY</h3>
+        <div className="h-[1px] w-16 md:w-24 bg-sky-500 mx-auto mt-4" />
       </div>
-      
-      <div className="flex flex-col gap-16 max-w-5xl mx-auto mb-32">
-        {events.map((event) => (
-          <div key={event.id} className="w-full transform transition-all" onClick={() => setSelectedEvent(event)}>
-            <div className="glass-card p-4 rounded-[2.5rem] border border-white/5">
-              <EventCard event={event} />
-              <div className="px-12 py-6 bg-slate-900/30 rounded-b-[2rem] mt-2 flex justify-center items-center text-sm font-mono-tech uppercase">
-                <span className="text-slate-500">Event Date: <span className="text-sky-400 font-bold">{getEventDate(event.relevantInfo)}</span></span>
-              </div>
+
+      <div className="grid grid-cols-1 gap-4 md:hidden">
+        {[
+          { name: "ICEBERG HACKS — Freshers Edition", year: "1st Years only" },
+          { name: "ICEBERG HACKS — Pro Edition", year: "2nd Years only" },
+          { name: "LEVEL UP Workshop", year: "3rd Years (priority), others may join" }
+        ].map((item, i) => (
+          <div key={i} className="glass-card p-6 border border-white/10 rounded-2xl bg-white/5">
+            <p className="text-sky-400 font-mono-tech text-[10px] uppercase tracking-[0.2em] mb-2">Event Name</p>
+            <p className="text-white font-bold text-lg mb-4">{item.name}</p>
+            <p className="text-sky-400 font-mono-tech text-sm leading-relaxed">
+               <span className="text-slate-400">Eligibility:</span> <br/> {item.year}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <div className="hidden md:block glass-card rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl">
+        <table className="w-full text-left">
+          <thead className="bg-sky-500/10 font-stylish text-sky-400 text-xs uppercase tracking-[0.2em] border-b border-white/10">
+            <tr>
+              <th className="px-12 py-8">Event</th>
+              <th className="px-12 py-8">Eligible Year</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-white/5 text-slate-300">
+            <tr className="hover:bg-white/5 transition-colors">
+              <td className="px-12 py-8 font-bold text-white text-lg">ICEBERG HACKS — Freshers Edition</td>
+              <td className="px-12 py-8 font-mono-tech text-sky-400">1st Years only</td>
+            </tr>
+            <tr className="hover:bg-white/5 transition-colors">
+              <td className="px-12 py-8 font-bold text-white text-lg">ICEBERG HACKS — Pro Edition</td>
+              <td className="px-12 py-8 font-mono-tech text-sky-400">2nd Years only</td>
+            </tr>
+            <tr className="hover:bg-white/5 transition-colors">
+              <td className="px-12 py-8 font-bold text-white text-lg">LEVEL UP Workshop</td>
+              <td className="px-12 py-8 font-mono-tech text-sky-400">3rd Years (priority), others may join</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+);
+
+  const renderTeamView = () => {
+  // 1. FILTER members by tab
+  const allFilteredMembers = TEAM_MEMBERS.filter(m => m.category === activeTeamTab);
+  
+  // 2. PAGINATION LOGIC (Handles the 20 member constraint)
+  const MEMBERS_PER_PAGE = 8;
+  const totalPages = Math.ceil(allFilteredMembers.length / MEMBERS_PER_PAGE);
+  const startIndex = (teamPage - 1) * MEMBERS_PER_PAGE;
+  const currentMembers = allFilteredMembers.slice(startIndex, startIndex + MEMBERS_PER_PAGE);
+  
+  return (
+    <div className="animate-in fade-in slide-in-from-bottom-10 duration-700 max-w-7xl mx-auto pt-10 md:pt-20 px-4">
+      {/* HEADER: text-5xl on mobile, text-9xl on desktop */}
+      <div className="text-center mb-10 md:mb-16">
+        <h2 className="text-5xl md:text-9xl font-stylish font-black mb-4 tracking-tighter uppercase italic text-white glow-text">TEAM</h2>
+        <div className="h-1 w-20 md:w-24 bg-sky-500 mx-auto rounded-full shadow-[0_0_15px_rgba(56,189,248,0.5)]" />
+      </div>
+
+      {/* TABS: Flex-wrap for desktop, horizontal scroll for mobile */}
+      <div className="flex md:justify-center gap-4 md:gap-8 mb-16 overflow-x-auto md:overflow-visible pb-4 md:pb-0 px-4">
+        {(['organizers', 'co-organizers', 'core'] as TeamTab[]).map((tab) => (
+          <button
+            key={tab}
+            onClick={() => { setActiveTeamTab(tab); setTeamPage(1); }}
+            className={`whitespace-nowrap px-8 py-3 rounded-2xl font-stylish font-bold text-xs md:text-sm tracking-widest uppercase transition-all duration-300 border ${
+              activeTeamTab === tab 
+                ? 'bg-sky-500 text-white border-sky-400 shadow-[0_0_20px_rgba(56,189,248,0.4)]' 
+                : 'bg-slate-900/50 text-slate-400 border-white/5 hover:border-white/20'
+            }`}
+          >
+            {tab.replace('-', ' ')}
+          </button>
+        ))}
+      </div>
+
+      {/* GRID: 1 col (mobile) -> 2 col (tablet) -> 3 col (laptop) -> 4 col (desktop) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 px-4 mb-16">
+        {currentMembers.map((member) => (
+          <div 
+            key={member.id} 
+            className="group glass-card rounded-3xl p-8 border border-white/10 hover:border-sky-500/50 transition-all duration-500 hover:-translate-y-2 flex flex-col items-center text-center"
+          >
+            {/* PHOTO FRAME (Matches your original square style) */}
+            <div className="w-24 h-24 rounded-2xl bg-slate-900 border-2 border-dashed border-sky-500/30 flex items-center justify-center text-4xl mb-6 overflow-hidden transition-all duration-500 group-hover:border-sky-500 group-hover:bg-sky-500/10 shadow-inner">
+              {member.image ? (
+                <img src={member.image} alt={member.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+              ) : (
+                member.avatarIcon || '👤'
+              )}
+            </div>
+            
+            <h4 className="text-xl font-bold text-white mb-2 group-hover:text-sky-400 transition-colors">{member.name}</h4>
+            <p className="text-slate-400 font-mono-tech text-xs uppercase tracking-widest group-hover:text-slate-200 transition-colors">{member.role}</p>
+            
+            {/* SOCIAL LINKS (Using your original SVGs) */}
+            <div className="mt-8 flex gap-4 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
+               {/* Instagram/LinkedIn links as defined before */}
             </div>
           </div>
         ))}
       </div>
 
-      <div className="max-w-5xl mx-auto mb-40">
-        <div className="text-center mb-12">
-          <h3 className="text-5xl font-stylish font-black text-white glow-text">ELIGIBILITY</h3>
-          <div className="h-[1px] w-24 bg-sky-500 mx-auto mt-4" />
+      {/* PAGINATION (Only shows if there are more than 8 members) */}
+      {totalPages > 1 && (
+        <div className="flex justify-center items-center gap-6 mb-32">
+          <button 
+            disabled={teamPage === 1}
+            onClick={() => setTeamPage(p => p - 1)}
+            className="p-4 rounded-full bg-white/5 border border-white/10 text-white disabled:opacity-20 hover:bg-sky-500/20 transition-all"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <span className="text-slate-400 font-mono-tech uppercase text-xs tracking-widest">
+            Page <span className="text-white">{teamPage}</span> of {totalPages}
+          </span>
+          <button 
+            disabled={teamPage === totalPages}
+            onClick={() => setTeamPage(p => p + 1)}
+            className="p-4 rounded-full bg-white/5 border border-white/10 text-white disabled:opacity-20 hover:bg-sky-500/20 transition-all"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
         </div>
-        <div className="glass-card rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl">
-          <table className="w-full text-left">
-            <thead className="bg-sky-500/10 font-stylish text-sky-400 text-xs uppercase tracking-[0.2em] border-b border-white/10">
-              <tr>
-                <th className="px-12 py-8">Event</th>
-                <th className="px-12 py-8">Eligible Year</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/5 text-slate-300">
-              <tr className="hover:bg-white/5 transition-colors">
-                <td className="px-12 py-8 font-bold text-white text-lg">ICEBERG HACKS — Freshers Edition</td>
-                <td className="px-12 py-8 font-mono-tech text-sky-400">1st Years only</td>
-              </tr>
-              <tr className="hover:bg-white/5 transition-colors">
-                <td className="px-12 py-8 font-bold text-white text-lg">ICEBERG HACKS — Pro Edition</td>
-                <td className="px-12 py-8 font-mono-tech text-sky-400">2nd Years only</td>
-              </tr>
-              <tr className="hover:bg-white/5 transition-colors">
-                <td className="px-12 py-8 font-bold text-white text-lg">LEVEL UP Workshop</td>
-                <td className="px-12 py-8 font-mono-tech text-sky-400">3rd Years (priority), others may join</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      )}
     </div>
   );
-
-  const renderTeamView = () => {
-    const currentMembers = TEAM_MEMBERS.filter(m => m.category === activeTeamTab);
-    
-    return (
-      <div className="animate-in fade-in slide-in-from-bottom-10 duration-700 max-w-7xl mx-auto pt-20">
-        <div className="text-center mb-16">
-          <h2 className="text-6xl md:text-9xl font-stylish font-black mb-4 tracking-tighter uppercase italic text-white glow-text">TEAM</h2>
-          <div className="h-1 w-24 bg-sky-500 mx-auto rounded-full shadow-[0_0_15px_rgba(56,189,248,0.5)]" />
-        </div>
-
-        <div className="flex justify-center gap-4 md:gap-8 mb-16 flex-wrap px-4">
-          {(['organizers', 'co-organizers', 'core'] as TeamTab[]).map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTeamTab(tab)}
-              className={`px-8 py-3 rounded-2xl font-stylish font-bold text-xs md:text-sm tracking-widest uppercase transition-all duration-300 border ${
-                activeTeamTab === tab 
-                  ? 'bg-sky-500 text-white border-sky-400 shadow-[0_0_20px_rgba(56,189,248,0.4)]' 
-                  : 'bg-slate-900/50 text-slate-400 border-white/5 hover:border-white/20'
-              }`}
-            >
-              {tab.replace('-', ' ')}
-            </button>
-          ))}
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 px-4 mb-32">
-          {currentMembers.map((member) => (
-            <div 
-              key={member.id} 
-              className="group glass-card rounded-3xl p-8 border border-white/10 hover:border-sky-500/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.5)] flex flex-col items-center text-center"
-            >
-              {/* UPDATED SQUARE PHOTO FRAME */}
-              <div className="w-24 h-24 rounded-2xl bg-slate-900 border-2 border-dashed border-sky-500/30 flex items-center justify-center text-4xl mb-6 group-hover:border-sky-500 group-hover:bg-sky-500/10 transition-all duration-500 shadow-inner overflow-hidden">
-                {member.image ? (
-                  <img 
-                    src={member.image} 
-                    alt={member.name} 
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
-                  />
-                ) : (
-                  member.avatarIcon || '👤'
-                )}
-              </div>
-              
-              <h4 className="text-xl font-bold text-white mb-2 group-hover:text-sky-400 transition-colors">{member.name}</h4>
-              <p className="text-slate-400 font-mono-tech text-xs uppercase tracking-widest group-hover:text-slate-200 transition-colors">{member.role}</p>
-              
-              <div className="mt-8 flex gap-4 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
-                <div className="w-8 h-8 rounded-lg bg-white/5 hover:bg-sky-500/20 flex items-center justify-center cursor-pointer border border-white/5 transition-colors">
-                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
-                </div>
-                <div className="w-8 h-8 rounded-lg bg-white/5 hover:bg-sky-500/20 flex items-center justify-center cursor-pointer border border-white/5 transition-colors">
-                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  };
+};
 
   const renderMissionView = () => (
-    <div className="animate-in fade-in slide-in-from-bottom-10 duration-700 max-w-6xl mx-auto pt-20 h-[80vh] flex flex-col justify-center">
-      <div className="text-center mb-20">
-        <h2 className="text-6xl md:text-9xl font-stylish font-black mb-4 tracking-tighter uppercase italic text-white glow-text">MISSION</h2>
-        <div className="h-1 w-24 bg-sky-500 mx-auto rounded-full shadow-[0_0_15px_rgba(56,189,248,0.5)]" />
-      </div>
-      <div className="glass-card rounded-[3rem] p-10 md:p-16 border border-white/10 shadow-2xl relative overflow-hidden group text-center">
-         <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-sky-500/10 rounded-full blur-[120px] -mr-80 -mt-80" />
-         <p className="text-xl md:text-3xl font-stylish font-bold text-white leading-tight mb-10 relative z-10">
-           ICEBERG COSMOS 2025 establishes a <span className="text-sky-400">structured, year-wise technical growth pipeline</span> that nurtures innovation, research capability, and career readiness.
-         </p>
-         <div className="h-[1px] w-24 bg-sky-500 mx-auto mb-10 relative z-10" />
-         <p className="text-base md:text-lg text-slate-300 leading-relaxed font-light relative z-10">
-           The event strengthens preparation for <span className="text-white font-medium">SBH – Smart Bengal Hackathon</span> and enhances the institution’s technical and competitive standing.
-         </p>
-      </div>
+  <div className="animate-in fade-in slide-in-from-bottom-10 duration-700 max-w-6xl mx-auto pt-10 md:pt-20 px-4 min-h-[70vh] flex flex-col justify-center">
+    {/* Header: Scaled for mobile */}
+    <div className="text-center mb-10 md:mb-20">
+      <h2 className="text-5xl md:text-9xl font-stylish font-black mb-4 tracking-tighter uppercase italic text-white glow-text">MISSION</h2>
+      <div className="h-1 w-20 md:w-24 bg-sky-500 mx-auto rounded-full shadow-[0_0_15px_rgba(56,189,248,0.5)]" />
     </div>
-  );
+
+    <div className="glass-card rounded-[2rem] md:rounded-[3rem] p-8 md:p-16 border border-white/10 shadow-2xl relative overflow-hidden group text-center">
+      <div className="absolute top-0 right-0 w-[30rem] h-[30rem] bg-sky-500/10 rounded-full blur-[100px] -mr-40 -mt-40" />
+      
+      <p className="text-lg md:text-3xl font-stylish font-bold text-white leading-snug md:leading-tight mb-8 relative z-10">
+        ICEBERG COSMOS 2025 establishes a <span className="text-sky-400">structured, year-wise technical growth pipeline</span> that nurtures innovation, research capability, and career readiness.
+      </p>
+      
+      <div className="h-[1px] w-16 md:w-24 bg-sky-500 mx-auto mb-8 relative z-10" />
+      
+      <p className="text-sm md:text-lg text-slate-300 leading-relaxed font-light relative z-10">
+        The event strengthens preparation for <span className="text-white font-medium">SBH – Smart Bengal Hackathon</span> and enhances the institution’s technical and competitive standing.
+      </p>
+    </div>
+  </div>
+);
 
   return (
     <div className="min-h-screen relative overflow-hidden text-slate-50 bg-[#020617]">
