@@ -585,9 +585,9 @@ const App: React.FC = () => {
         <div className="absolute top-28 left-6 md:top-32 md:left-10 z-[30] pointer-events-none hidden lg:block">
           <div className="flex flex-col items-center gap-3">
             <div className="w-20 h-20 md:w-24 md:h-24 bg-white rounded-2xl flex items-center justify-center overflow-hidden border-2 border-sky-500/20 shadow-[0_0_30px_rgba(56,189,248,0.2)]">
-              <LogoImage src="/RCC.png" className="w-full h-full object-contain p-2" />
+              <LogoImage src="/RCC.png" className="w-full h-full object-cover p-2" />
             </div>
-            <span className="text-[9px] font-mono-tech text-sky-400/40 uppercase tracking-[0.4em]">Host Institute</span>
+            <span className="text-[9px] font-mono-tech text-sky-400/40 uppercase tracking-[0.4em]">RCCIIT</span>
           </div>
         </div>
 
