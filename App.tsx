@@ -254,6 +254,7 @@ const App: React.FC = () => {
   const [events, setEvents] = useState<EventItemWithEligibility[]>(INITIAL_EVENTS);
   const [teamPage, setTeamPage] = useState(1);
   const MEMBERS_PER_PAGE = 8;
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     setTeamPage(1);
@@ -479,10 +480,7 @@ const App: React.FC = () => {
 );
 
   const renderTeamView = () => {
-  // 1. FILTER members by tab
   const allFilteredMembers = TEAM_MEMBERS.filter(m => m.category === activeTeamTab);
-  
-  // 2. PAGINATION LOGIC (Handles the 20 member constraint)
   const MEMBERS_PER_PAGE = 8;
   const totalPages = Math.ceil(allFilteredMembers.length / MEMBERS_PER_PAGE);
   const startIndex = (teamPage - 1) * MEMBERS_PER_PAGE;
@@ -613,34 +611,51 @@ const App: React.FC = () => {
         </div>
 
         <div className="relative z-10">
-          <nav className="fixed top-0 w-full z-40 px-6 py-6 flex justify-between items-center backdrop-blur-md border-b border-white/10 bg-slate-950/40">
-            <div className="flex items-center gap-3 cursor-pointer" onClick={() => setView('home')}>
-              <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center overflow-hidden shadow-lg shadow-sky-500/20 border border-sky-500/20">
-                <LogoImage src="ICEBERG.jpeg" />
-              </div>
-              <span className="text-xl font-stylish font-bold tracking-tighter text-white uppercase">ICEBERG <span className="text-sky-400">COSMOS</span></span>
+          <nav className="fixed top-0 w-full z-50 px-6 py-5 flex justify-between items-center backdrop-blur-xl border-b border-white/10 bg-slate-950/60">
+            <div className="flex items-center gap-3 cursor-pointer z-50" onClick={() => { setView('home'); setIsMenuOpen(false); }}>
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-lg flex items-center justify-center overflow-hidden border border-sky-500/20 shadow-lg shadow-sky-500/20">
+            <LogoImage src="ICEBERG.jpeg" />
             </div>
-            
-            <div className="hidden md:flex gap-12 items-center text-sm font-stylish font-bold tracking-widest uppercase ml-auto mr-4 md:mr-6">
-              <button onClick={() => setView('home')} className={`hover:text-sky-400 transition-colors ${view === 'home' ? 'text-sky-400' : 'text-slate-300'}`}>Home</button>
-              <button onClick={() => setView('about')} className={`hover:text-sky-400 transition-colors ${view === 'about' ? 'text-sky-400' : 'text-slate-300'}`}>About</button>
-              <button onClick={() => setView('events')} className={`hover:text-sky-400 transition-colors ${view === 'events' ? 'text-sky-400' : 'text-slate-300'}`}>Events</button>
-              <button onClick={() => setView('team')} className={`hover:text-sky-400 transition-colors ${view === 'team' ? 'text-sky-400' : 'text-slate-300'}`}>Team</button>
-              <button onClick={() => setView('mission')} className={`hover:text-sky-400 transition-colors ${view === 'mission' ? 'text-sky-400' : 'text-slate-300'}`}>Mission</button>
+            <span className="text-lg md:text-xl font-stylish font-bold text-white uppercase tracking-tighter">
+            ICEBERG <span className="text-sky-400">COSMOS</span>
+            </span>
             </div>
 
-            <div className="md:hidden">
-            <select 
-              value={view} 
-              onChange={(e) => setView(e.target.value as ViewType)}
-              className="bg-slate-900 text-sky-400 text-xs font-bold border border-sky-500/30 rounded-lg px-3 py-2 outline-none appearance-none uppercase tracking-widest"
+            <div className="hidden md:flex gap-10 items-center text-sm font-stylish font-bold tracking-widest uppercase ml-auto">
+            {['home', 'about', 'events', 'team', 'mission'].map((item) => (
+            <button 
+              key={item}
+              onClick={() => setView(item as ViewType)}
+              className={`hover:text-sky-400 transition-colors ${view === item ? 'text-sky-400' : 'text-slate-300'}`}
             >
-              <option value="home">Menu: Home</option>
-              <option value="about">Menu: About</option>
-              <option value="events">Menu: Events</option>
-              <option value="team">Menu: Team</option>
-              <option value="mission">Menu: Mission</option>
-            </select>
+              {item}
+            </button>
+            ))}
+            </div>
+
+            <button 
+              className="md:hidden z-50 flex flex-col gap-1.5 justify-center items-center w-10 h-10 border border-white/10 rounded-xl bg-white/5 active:scale-90 transition-transform"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+
+            <div className={`h-0.5 w-5 bg-sky-400 transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+            <div className={`h-0.5 w-5 bg-sky-400 transition-all duration-300 ${isMenuOpen ? 'opacity-0' : ''}`} />
+            <div className={`h-0.5 w-5 bg-sky-400 transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+            </button>
+
+            <div className={`fixed inset-0 bg-slate-950/98 backdrop-blur-2xl transition-all duration-500 md:hidden flex flex-col items-center justify-center gap-8 ${isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
+              {['home', 'about', 'events', 'team', 'mission'].map((item, idx) => (
+            <button 
+              key={item}
+              style={{ transitionDelay: `${idx * 50}ms` }}
+              onClick={() => { setView(item as ViewType); setIsMenuOpen(false); }}
+              className={`text-3xl font-stylish font-black uppercase tracking-widest transition-all duration-300 ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} ${view === item ? 'text-sky-400 scale-110' : 'text-white/60'}`}
+            >
+              {item}
+            </button>
+            ))}
+    
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-sky-500/10 rounded-full blur-[120px] pointer-events-none" />
             </div>
           </nav>
 
