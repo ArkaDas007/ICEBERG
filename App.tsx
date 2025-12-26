@@ -614,10 +614,9 @@ const App: React.FC = () => {
                 <LogoImage src="ICEBERG.jpeg" />
               </div>
               <span className="text-lg font-stylish font-bold text-white uppercase tracking-tighter">
-                ICEBERG <span className="text-sky-400">COSMOS</span>
+                ICEBERG <span className="text-sky-400">COSMOS 2025-26</span>
               </span>
             </div>
-
             <div className="hidden md:flex gap-10 items-center text-sm font-stylish font-bold tracking-widest uppercase ml-auto">
               {['home', 'about', 'events', 'team', 'mission'].map((item) => (
                 <button
@@ -631,42 +630,43 @@ const App: React.FC = () => {
             </div>
 
             <button
-              className="md:hidden z-[70] flex flex-col gap-1.5 justify-center items-center w-12 h-12 border border-white/20 rounded-xl bg-slate-900 shadow-2xl"
+              className="md:hidden z-[70] flex flex-col gap-1.5 justify-center items-center w-11 h-11 border border-white/20 rounded-xl bg-slate-900 shadow-2xl"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              <div className={`h-0.5 w-6 bg-sky-400 transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-              <div className={`h-0.5 w-6 bg-sky-400 transition-all duration-300 ${isMenuOpen ? 'opacity-0' : ''}`} />
-              <div className={`h-0.5 w-6 bg-sky-400 transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+              <div className={`h-0.5 w-5 bg-sky-400 transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+              <div className={`h-0.5 w-5 bg-sky-400 transition-all duration-300 ${isMenuOpen ? 'opacity-0' : ''}`} />
+              <div className={`h-0.5 w-5 bg-sky-400 transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
             </button>
 
             <div className={`fixed inset-0 z-[60] md:hidden transition-all duration-500 ${isMenuOpen ? 'visible' : 'invisible'}`}>
+              
               <div
-                className={`absolute inset-0 bg-black/80 backdrop-blur-md transition-opacity duration-500 ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`}
+                className={`absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity duration-500 ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`}
                 onClick={() => setIsMenuOpen(false)}
               />
 
-              <div className={`absolute right-0 top-0 h-full w-[80%] max-w-[300px] bg-slate-950 border-l border-sky-500/20 shadow-[-10px_0_40px_rgba(0,0,0,0.9)] transition-transform duration-500 flex flex-col ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+              <div className={`absolute right-0 top-0 h-full w-[70%] max-w-[260px] bg-slate-950 border-l border-sky-500/20 shadow-[-10px_0_40px_rgba(0,0,0,0.9)] transition-transform duration-500 flex flex-col justify-center ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
 
-                <div className="h-32 w-full border-b border-white/5 bg-white/5 flex items-end p-8">
-                  <span className="text-sky-400 font-mono-tech text-xs tracking-[0.3em] uppercase">Navigation</span>
-                </div>
+                <div className="absolute top-10 right-0 w-32 h-32 bg-sky-500/5 blur-[60px] pointer-events-none" />
 
-                <div className="flex flex-col p-8 gap-6 overflow-y-auto">
+                <div className="flex flex-col px-8 gap-4">
+                  <p className="text-[10px] font-mono-tech text-sky-500/50 uppercase tracking-[0.3em] mb-4">Navigation</p>
+
                   {['home', 'about', 'events', 'team', 'mission'].map((item) => (
                     <button
                       key={item}
                       onClick={() => { setView(item as ViewType); setIsMenuOpen(false); }}
-                      className={`text-xl font-stylish font-bold uppercase tracking-[0.15em] text-left py-2 transition-all duration-300 ${view === item ? 'text-sky-400 border-l-4 border-sky-400 pl-4' : 'text-slate-400 pl-0 hover:text-white'}`}
+                      className={`text-lg font-stylish font-bold uppercase tracking-[0.1em] text-left py-1 transition-all duration-300 ${view === item ? 'text-sky-400 border-l-2 border-sky-400 pl-4' : 'text-slate-400 pl-0'}`}
                     >
                       {item}
                     </button>
                   ))}
                 </div>
 
-                <div className="mt-auto p-8 bg-slate-900/50 border-t border-white/5">
-                  <p className="text-[10px] font-mono-tech text-slate-500 uppercase tracking-widest mb-2">Flagship Initiative</p>
-                  <p className="text-xs text-white font-bold uppercase tracking-tighter">IE(I) Students' Chapter</p>
-                  <p className="text-[9px] text-sky-400 font-mono-tech mt-1 tracking-widest uppercase">Dept of IT, RCCIIT</p>
+                <div className="absolute bottom-8 left-8 right-8 pt-6 border-t border-white/5">
+                  <p className="text-[10px] text-slate-500 font-mono-tech uppercase tracking-widest leading-tight">
+                    ICEBERG <br /> COSMOS 25-26
+                  </p>
                 </div>
               </div>
             </div>

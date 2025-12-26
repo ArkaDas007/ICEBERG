@@ -20,7 +20,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
   { id: 'co3', name: 'Departmental Faculty', role: 'Event Management', category: 'co-organizers', avatarIcon: '👤' },
 
   // Core Team
-  { id: 'ct1', name: 'Arka Pratim Das', role: 'TECHNICAL HEAD', category: 'core', avatarIcon: '👤', image: 'CHS.jpeg' },
+  { id: 'ct1', name: 'Arka Pratim Das', role: 'TECHNICAL HEAD', category: 'core', avatarIcon: '👤', image: '/Arka.jpeg' },
   { id: 'ct2', name: 'Technical Head', role: 'Hackathon Coordinator', category: 'core', avatarIcon: '👤' },
   { id: 'ct3', name: 'Logistics Manager', role: 'Operations & Strategy', category: 'core', avatarIcon: '👤' },
   { id: 'ct4', name: 'PR & Outreach', role: 'Communications Lead', category: 'core', avatarIcon: '👤' },
