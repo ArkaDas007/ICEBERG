@@ -488,13 +488,11 @@ const App: React.FC = () => {
   
   return (
     <div className="animate-in fade-in slide-in-from-bottom-10 duration-700 max-w-7xl mx-auto pt-10 md:pt-20 px-4">
-      {/* HEADER: text-5xl on mobile, text-9xl on desktop */}
       <div className="text-center mb-10 md:mb-16">
         <h2 className="text-5xl md:text-9xl font-stylish font-black mb-4 tracking-tighter uppercase italic text-white glow-text">TEAM</h2>
         <div className="h-1 w-20 md:w-24 bg-sky-500 mx-auto rounded-full shadow-[0_0_15px_rgba(56,189,248,0.5)]" />
       </div>
 
-      {/* TABS: Flex-wrap for desktop, horizontal scroll for mobile */}
       <div className="flex md:justify-center gap-4 md:gap-8 mb-16 overflow-x-auto md:overflow-visible pb-4 md:pb-0 px-4">
         {(['organizers', 'co-organizers', 'core'] as TeamTab[]).map((tab) => (
           <button
@@ -538,7 +536,6 @@ const App: React.FC = () => {
         ))}
       </div>
 
-      {/* PAGINATION (Only shows if there are more than 8 members) */}
       {totalPages > 1 && (
         <div className="flex justify-center items-center gap-6 mb-32">
           <button 
@@ -611,51 +608,60 @@ const App: React.FC = () => {
         </div>
 
         <div className="relative z-10">
-          <nav className="fixed top-0 w-full z-50 px-6 py-5 flex justify-between items-center backdrop-blur-xl border-b border-white/10 bg-slate-950/60">
-            <div className="flex items-center gap-3 cursor-pointer z-50" onClick={() => { setView('home'); setIsMenuOpen(false); }}>
-            <div className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-lg flex items-center justify-center overflow-hidden border border-sky-500/20 shadow-lg shadow-sky-500/20">
-            <LogoImage src="ICEBERG.jpeg" />
-            </div>
-            <span className="text-lg md:text-xl font-stylish font-bold text-white uppercase tracking-tighter">
-            ICEBERG <span className="text-sky-400">COSMOS</span>
-            </span>
+          <nav className="fixed top-0 w-full z-50 px-6 py-5 flex justify-between items-center backdrop-blur-xl border-b border-white/10 bg-slate-950/80">
+
+            <div className="flex items-center gap-3 cursor-pointer z-[60]" onClick={() => { setView('home'); setIsMenuOpen(false); }}>
+              <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center overflow-hidden border border-sky-500/20 shadow-lg">
+                <LogoImage src="ICEBERG.jpeg" />
+              </div>
+              <span className="text-lg font-stylish font-bold text-white uppercase tracking-tighter">
+                ICEBERG <span className="text-sky-400">COSMOS</span>
+              </span>
             </div>
 
             <div className="hidden md:flex gap-10 items-center text-sm font-stylish font-bold tracking-widest uppercase ml-auto">
-            {['home', 'about', 'events', 'team', 'mission'].map((item) => (
-            <button 
-              key={item}
-              onClick={() => setView(item as ViewType)}
-              className={`hover:text-sky-400 transition-colors ${view === item ? 'text-sky-400' : 'text-slate-300'}`}
-            >
-              {item}
-            </button>
-            ))}
+              {['home', 'about', 'events', 'team', 'mission'].map((item) => (
+                <button
+                  key={item}
+                  onClick={() => setView(item as ViewType)}
+                  className={`hover:text-sky-400 transition-colors ${view === item ? 'text-sky-400' : 'text-slate-300'}`}
+                >
+                  {item}
+                </button>
+              ))}
             </div>
 
-            <button 
-              className="md:hidden z-50 flex flex-col gap-1.5 justify-center items-center w-10 h-10 border border-white/10 rounded-xl bg-white/5 active:scale-90 transition-transform"
+            <button
+              className="md:hidden z-[60] flex flex-col gap-1.5 justify-center items-center w-10 h-10 border border-white/20 rounded-xl bg-slate-900 shadow-xl"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-
-            <div className={`h-0.5 w-5 bg-sky-400 transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-            <div className={`h-0.5 w-5 bg-sky-400 transition-all duration-300 ${isMenuOpen ? 'opacity-0' : ''}`} />
-            <div className={`h-0.5 w-5 bg-sky-400 transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+              <div className={`h-0.5 w-5 bg-sky-400 transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+              <div className={`h-0.5 w-5 bg-sky-400 transition-all duration-300 ${isMenuOpen ? 'opacity-0' : ''}`} />
+              <div className={`h-0.5 w-5 bg-sky-400 transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
             </button>
 
-            <div className={`fixed inset-0 bg-slate-950/98 backdrop-blur-2xl transition-all duration-500 md:hidden flex flex-col items-center justify-center gap-8 ${isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
-              {['home', 'about', 'events', 'team', 'mission'].map((item, idx) => (
-            <button 
-              key={item}
-              style={{ transitionDelay: `${idx * 50}ms` }}
-              onClick={() => { setView(item as ViewType); setIsMenuOpen(false); }}
-              className={`text-3xl font-stylish font-black uppercase tracking-widest transition-all duration-300 ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'} ${view === item ? 'text-sky-400 scale-110' : 'text-white/60'}`}
-            >
-              {item}
-            </button>
-            ))}
-    
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-sky-500/10 rounded-full blur-[120px] pointer-events-none" />
+            <div className={`fixed inset-0 z-[55] transition-all duration-500 md:hidden ${isMenuOpen ? 'visible' : 'invisible'}`}>
+              <div className={`absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-500 ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`} onClick={() => setIsMenuOpen(false)} />
+
+              <div className={`absolute right-0 top-0 h-full w-[70%] bg-slate-950 border-l border-white/10 p-10 flex flex-col pt-32 gap-8 transition-transform duration-500 shadow-[-20px_0_50px_rgba(0,0,0,0.8)] ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+
+                <div className="absolute top-0 right-0 w-full h-32 bg-sky-500/10 blur-[80px] pointer-events-none" />
+
+                {['home', 'about', 'events', 'team', 'mission'].map((item) => (
+                  <button
+                    key={item}
+                    onClick={() => { setView(item as ViewType); setIsMenuOpen(false); }}
+                    className={`text-2xl font-stylish font-bold uppercase tracking-[0.2em] text-left transition-all duration-300 ${view === item ? 'text-sky-400 pl-4 border-l-2 border-sky-400' : 'text-slate-400 hover:text-white'}`}
+                  >
+                    {item}
+                  </button>
+                ))}
+
+                <div className="mt-auto pb-10 border-t border-white/5 pt-8">
+                  <p className="text-[10px] font-mono-tech text-slate-500 uppercase tracking-widest">Organized by</p>
+                  <p className="text-xs text-slate-300 font-bold mt-1 uppercase">IE(I) Students' Chapter</p>
+                </div>
+              </div>
             </div>
           </nav>
 
